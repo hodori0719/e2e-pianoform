@@ -26,7 +26,7 @@ def batch_preparation_ctc(data):
     for i, img in enumerate(images):
         c, h, w = img.size()
         X_train[i, :, :h, :w] = img
-    
+
     max_length_seq = max([len(w) for w in gt])
     Y_train = torch.zeros(size=[len(gt),max_length_seq])
     for i, seq in enumerate(gt):
@@ -47,7 +47,7 @@ def load_data(partition_file, resize_ratio, use_raw_krn=False, load_distorted=Fa
                 file_path = file_path.replace(".bekrn", extension)
             krn = None
             krnlines = []
-            file_path = f"Data/{file_path}"
+            # file_path = f"Data/{file_path}"
             if os.path.isfile(file_path):
                 with open(file_path) as krnfile:
                     krn = krnfile.read()
@@ -97,7 +97,7 @@ class PoliphonicDataset(Dataset):
     def __getitem__(self, index):
         image = self.tensorTransform(self.x[index])
         gt = torch.from_numpy(np.asarray([self.w2i[token] for token in self.y[index]]))
-        
+
         return image, gt, (image.shape[2] // 8) * (image.shape[1] // 16), len(gt)
 
     def get_max_hw(self):
@@ -105,7 +105,7 @@ class PoliphonicDataset(Dataset):
         m_height = np.max([img.shape[0] for img in self.x])
 
         return m_height, m_width
-    
+
     def get_max_seqlen(self):
         return np.max([len(seq) for seq in self.y])
 
@@ -114,15 +114,15 @@ class PoliphonicDataset(Dataset):
 
     def get_gt(self):
         return self.y
-    
+
     def set_dictionaries(self, w2i, i2w):
         self.w2i = w2i
         self.i2w = i2w
         self.padding_token = w2i['<pad>']
-    
+
     def get_dictionaries(self):
         return self.w2i, self.i2w
-    
+
     def get_i2w(self):
         return self.i2w
 
