@@ -40,12 +40,12 @@ def main(train_path=None, val_path=None, test_path=None, encoding=None, model_na
                                    monitor="val_SER", mode='min',
                                    save_top_k=1, verbose=True)
 
-    trainer = Trainer(max_epochs=0, logger=wandb_logger, callbacks=[checkpointer, early_stopping])
+    trainer = Trainer(max_epochs=20, logger=wandb_logger, callbacks=[checkpointer, early_stopping])
 
     trainer.fit(model, train_dataloader, val_dataloader)
 
-    # model = LighntingE2EModelUnfolding.load_from_checkpoint(checkpointer.best_model_path, model=torchmodel)
-    model = LighntingE2EModelUnfolding.load_from_checkpoint("weights/bekrn/CRNN/CRNN.ckpt", model=torchmodel)
+    model = LighntingE2EModelUnfolding.load_from_checkpoint(checkpointer.best_model_path, model=torchmodel)
+    # model = LighntingE2EModelUnfolding.load_from_checkpoint("weights/bekrn/CRNN/CRNN.ckpt", model=torchmodel)
     trainer.test(model, test_dataloader)
     wandb.finish()
 
