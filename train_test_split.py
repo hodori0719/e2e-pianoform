@@ -10,14 +10,16 @@ test = []
 for subdir, dirs, files in os.walk(directory):
     for file in files:
         if file.endswith('.bekrn'):
-            split = random.randint(1, 10)
-            point = os.path.join(subdir, file)
-            if split == 9:
-                val.append(point)
-            elif split == 10:
-                test.append(point)
-            else:
-                train.append(point)
+            choose = random.randint(1, 10)
+            if choose < 2:
+                split = random.randint(1, 10)
+                point = os.path.join(subdir, file)
+                if split == 9:
+                    val.append(point)
+                elif split == 10:
+                    test.append(point)
+                else:
+                    train.append(point)
 
 pdir = 'Data/grandstaff_dataset/partitions'
 
