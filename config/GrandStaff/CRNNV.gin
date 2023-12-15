@@ -1,0 +1,9 @@
+main.train_path = "Data/grandstaff_modified_dataset/partitions/train.txt"
+main.val_path = "Data/grandstaff_modified_dataset/partitions/val.txt"
+main.test_path = "Data/grandstaff_modified_dataset/partitions/test.txt"
+main.encoding = "vekrn"
+main.model_name = "CRNNV"
+
+load_data.extension = ".vekrn"
+load_data.load_distorted = False
+load_data.resize_ratio = 1.
