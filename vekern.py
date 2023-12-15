@@ -164,6 +164,8 @@ def bekrn_to_vekrn(b_file, v_file):
                     newline += lastSeenAccidental
                 else:
                     newline += 'n'
+            elif 'staff' in token: # relic of kern that encodes no visual information
+                newline += '*'
 
             else:
                 # NON-ALTERABLE TOKENS
