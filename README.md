@@ -1,41 +1,45 @@
-# End-to-end optical music recognition for pianoform sheet music
+# RUNNING THE CODE
 
-![PyTorch](https://img.shields.io/badge/PyTorch-%23EE4C2C.svg?style=flat&logo=PyTorch&logoColor=white) ![Lightning](https://img.shields.io/badge/-Lightning-792ee5?logo=pytorchlightning&logoColor=white)
-[![License](https://img.shields.io/static/v1?label=License&message=MIT&color=blue)]() [![Version](https://img.shields.io/static/v1?label=Version&message=1.0&color=)]() [![Python](https://img.shields.io/static/v1?label=Python&message=3.9&color=blue)]()
+# Dependencies
 
-This repository contains the public implementation of the paper:
+The dependencies for this repository can be opened in a conda environment with
+  $ conda create --name <env> --file requirements.txt
+Then activate with
+  $ conda activate
+
+# Data
+
+The GrandStaff dataset is [publicly available](https://sites.google.com/view/multiscore-project/datasets) here.
+
+!IMPORTANT: For the code in this repository to run, the grandstaff.tgz file must be downloaded from the above link and unzipped into the Data/grandstaff directory.
+
+You MUST also run
+  $ python3 vekern.py
+
+To generate the corresponding .vekrn files.
+
+# Optional: Data Preprocessing
+A random 80/10/10 partition of 2% of the original dataset can be generated with:
+  python3 train_test_split.py
+Then converted to equivalent vekern files with
+  python3 vekern_partition.py
+
+# Optional: Training
+You can train a model on the ORIGINAL DATA from scratch with:
+  $ python3 main.py config/GrandStaff/CRNN.gin
+You can train a model on the MODIFIED DATA from scratch with:
+  $ python3 main.py config/GrandStaff/CRNNV.gin
+
+Note that these scripts, by default, will consecutively train for 45 epochs, the same as the final weights included in my report. However, depending on CPU/GPU limitations of the system, the code may not be able to consecutively run for 45 epochs due to a possible memory leak issue. In the experiment, both models have been trained in groupings of 15/5/10/10/5 epochs, for a total of 45.
+
+# Testing
+By default, these are loaded with my best trained weights which are included in this repository. To change this, you must edit the code.
+
+
+This repository is based on the public implementation of the paper:
 
 >**Antonio Ríos-Vila**, David Rizo, José M.Iñesta, Jorge Calvo-Zaragoza<br />
   *[End-to-end optical music recognition for pianoform sheet music](https://link.springer.com/article/10.1007/s10032-023-00432-z#citeas)*<br />
   International Journal on Document Analysis and Recognition
 
 Which implements an end-to-end Optical Music Recognition method for pianoform music sheets.
-
-In this repository you will find:
-
-- Access links to the datasets created to perform our experiments.
-- Source code of the neural network model and carried experiments in the paper.
-
-# Data
-
-The GrandStaff dataset where the experiments of the paper have been carried are [publicly available](https://sites.google.com/view/multiscore-project/datasets) for replication purposes. 
-
-# Citation
-
-```bibtex
-@Article{Ríos-Vila2023,
-author={R{\'i}os-Vila, Antonio
-and Rizo, David
-and I{\~{n}}esta, Jos{\'e} M.
-and Calvo-Zaragoza, Jorge},
-title={End-to-end optical music recognition for pianoform sheet music},
-journal={International Journal on Document Analysis and Recognition (IJDAR)},
-year={2023},
-month={May},
-day={12},
-issn={1433-2825},
-doi={10.1007/s10032-023-00432-z},
-url={https://doi.org/10.1007/s10032-023-00432-z}
-}
-
-```
